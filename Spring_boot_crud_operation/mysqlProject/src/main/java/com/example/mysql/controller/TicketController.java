@@ -47,7 +47,7 @@ public String deleteticket(@PathVariable  Integer id) {
 public String updateticket(@RequestBody  Tickets tickets,@PathVariable  Integer id) {
 	tickets.setId(id);
 	dao.save(tickets);
-	return "Tickets deleted with id"+tickets.getAmount() ;
+	return "Tickets updated with id"+id ;
 }
 
 }
