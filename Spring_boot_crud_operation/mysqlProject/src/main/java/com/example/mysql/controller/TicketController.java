@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,7 @@ private TicketsDao dao;
 public String bookTicket(@RequestBody List<Tickets> tickets) {
 	dao.saveAll(tickets);
 	return "Tickets Booked" + tickets.size();
-}
+} 	
 @GetMapping("/getTickets")
 public List<Tickets> getTickets(){
 	return (List<Tickets>) dao.findAll();
@@ -38,6 +40,23 @@ public List<Tickets> getTickets(){
 public Optional<Tickets> getTicketsbyid(@PathVariable Integer id){
 	return (Optional<Tickets>) dao.findById(id);
 }
+
+
+@GetMapping("/getTicket2Tickets")
+public List<Tickets> getTicket10Tickets(){
+	Pageable  paging = PageRequest.of(0, 2);
+	return  dao.findAll(paging).getContent();
+
+}
+
+@GetMapping("/getTicketbyquery")
+public List<Tickets> getTicketbyquery(){
+	return  dao.findTickets();
+
+}
+
+
+
 @DeleteMapping("/deletetickets/{id}")
 public String deleteticket(@PathVariable  Integer id) {
 	dao.deleteById(id);
